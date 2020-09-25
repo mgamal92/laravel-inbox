@@ -29,4 +29,9 @@ trait Threads
 
         return $threadMessages->get();
     }
+
+    public function starThread($threadId)
+    {
+        return InboxThread::find($threadId)->update(['starred' => true]);
+    }
 }

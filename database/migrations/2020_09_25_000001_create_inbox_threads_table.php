@@ -18,6 +18,7 @@ class CreateInboxThreadsTable extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('receiver_id');
             $table->string('subject');
+            $table->boolean('starred')->default(0);
             $table->softDeletes();
             $table->timestamps();
             
