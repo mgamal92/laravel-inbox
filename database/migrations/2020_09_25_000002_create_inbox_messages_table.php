@@ -17,7 +17,7 @@ class CreateInboxThreadsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('thread_id');
             $table->unsignedBigInteger('sender_id');
-            $table->unsignedBigInteger('receiver_id');
+            $table->string('receivers_ids');
             $table->text('message');
             $table->softDeletes();
             $table->timestamps();
@@ -25,7 +25,6 @@ class CreateInboxThreadsTable extends Migration
             // Constraints
             $table->foreign('thread_id')->references('id')->on('inbox_threads');
             $table->foreign('sender_id')->references('id')->on('users');
-            $table->foreign('receiver_id')->references('id')->on('users');
         });
     }
 

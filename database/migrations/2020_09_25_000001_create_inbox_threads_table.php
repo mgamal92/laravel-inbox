@@ -16,7 +16,8 @@ class CreateInboxThreadsTable extends Migration
         Schema::create('inbox_threads', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sender_id');
-            $table->unsignedBigInteger('receiver_id');
+            $table->string('receiver_id');
+            $table->unsignedBigInteger('cc')->nullable();
             $table->string('subject');
             $table->boolean('starred')->default(0);
             $table->softDeletes();
@@ -25,7 +26,6 @@ class CreateInboxThreadsTable extends Migration
 
             // Constraints
             $table->foreign('sender_id')->references('id')->on('users');
-            $table->foreign('receiver_id')->references('id')->on('users');
         });
     }
 

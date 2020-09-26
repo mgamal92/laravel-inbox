@@ -3,12 +3,30 @@
 namespace MG\Inbox\Traits;
 
 use MG\Inbox\Models\InboxThread;
+use MG\Inbox\Models\InboxMessage;
 
-/**
- * Class InboxServiceProvider.
- */
 trait Threads
 {
+    public function composeThread($receiversIds, $subject, $message, $cc = null)
+    {
+        return DB::transaction(function () use ($receiversIds, $subject, $message, $cc) {
+            $thread = InboxThread::create([
+                'sender_id'     => auth()->id(),
+                'receiver_id'   => $receiversIds,
+                'cc'            => $cc,
+                'subject'       => $subject,
+            ]);
+    
+            $thread->messages()->create([
+                'sender_id'     => auth()->id(),
+                'receiver_id'   => $receiversIds,
+                'message'       => $message,
+            ]);
+
+            return $thread;
+        });
+    }
+
     public function sentThreads()
     {
         return InboxThread::where('sender_id', auth()->id())->get();
